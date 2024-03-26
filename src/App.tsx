@@ -80,7 +80,7 @@ const App = () => {
         />
       </Box>
 
-      <Controls setDotPosition={setDot1Position} />
+      <Controls master={true} setDotPosition={setDot1Position} />
     </div>
   );
 };

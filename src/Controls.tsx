@@ -13,10 +13,12 @@ const Controls = ({
   setDotPosition,
   parentBoxDot,
   parentBoxRef,
+  master = false,
 }: {
   setDotPosition: React.Dispatch<React.SetStateAction<Position>>;
   parentBoxRef?: React.RefObject<HTMLDivElement>;
   parentBoxDot?: Position;
+  master?: boolean;
 }) => {
   const intervalRef = useRef<number | null>(null);
 
@@ -167,20 +169,53 @@ const Controls = ({
     } else {
       setActiveButton(null);
     }
-  }, [parentBoxDot]);
+  }, [parentBoxDot, upBtnPos, downBtnPos, leftBtnPos, rightBtnPos]);
 
   useEffect(() => {
     if (activeButton !== null) {
-      console.log(activeButton);
       if (!intervalRef.current)
         intervalRef.current = moveDot(activeButton, true);
     }
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      intervalRef.current = null;
+      handleMouseUp();
     };
   }, [activeButton]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowUp":
+          setActiveButton(Direction.up);
+          break;
+
+        case "ArrowDown":
+          setActiveButton(Direction.down);
+          break;
+
+        case "ArrowLeft":
+          setActiveButton(Direction.left);
+          break;
+
+        case "ArrowRight":
+          setActiveButton(Direction.right);
+          break;
+      }
+    };
+
+    const handleKeyUp = (_e: KeyboardEvent) => {
+      setActiveButton(null);
+    };
+    if (master) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   return (
     <div className="w-32 m-auto flex flex-col justify-center items-center gap-2">
