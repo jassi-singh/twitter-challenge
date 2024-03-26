@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import Box from "./Box";
+import Box from "./Box.tsx";
 import Dot from "./Dot";
 import Controls from "./Controls";
 import { DOT_SIZE, TARGET_SIZE } from "./constants";
