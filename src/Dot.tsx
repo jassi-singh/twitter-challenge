@@ -1,8 +1,11 @@
-const Dot = ({ size }: { size: number }) => {
+import { Position } from "./App";
+import { DOT_SIZE } from "./constants";
+
+const Dot = ({ x, y }: Position) => {
   return (
     <div
-      style={{ height: size, width: size }}
-      className="rounded-full bg-green-700"
+      style={{ top: y, left: x, height: DOT_SIZE, width: DOT_SIZE }}
+      className="rounded-full bg-red-600 absolute"
     ></div>
   );
 };

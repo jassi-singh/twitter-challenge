@@ -1,18 +1,23 @@
 import React from "react";
 
-const Button = React.forwardRef<
-  HTMLButtonElement,
-  React.PropsWithChildren<React.HTMLAttributes<HTMLButtonElement>>
->(({ children, className, ...props }, ref) => {
-  return (
-    <button
-      ref={ref}
-      className={`rounded-sm p-2 text-white bg-zinc-600 hover:bg-zinc-700 active:bg-zinc-800 active:ring active:ring-yellow-500 active:text-yellow-500 ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-});
+interface ButtonProps extends React.ComponentProps<"button"> {
+  isActive: boolean;
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, isActive, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        {...props}
+        className={`p-2 bg-zinc-600 text-white hover:bg-zinc-700 active:ring active:ring-yellow-500 active:bg-zinc-800 ${
+          isActive ? "ring ring-yellow-500" : ""
+        }`}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 export default Button;

@@ -1,19 +1,18 @@
 import React from "react";
+import { BOX_SIZE } from "./constants";
 
-export interface BoxProps extends React.HTMLProps<HTMLDivElement> {
-  height: number;
-  width: number;
-}
-
-const Box = ({ children, height, width, className }: BoxProps) => {
-  return (
-    <div
-      style={{ height, width }}
-      className={`box-content relative border ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
+const Box = React.forwardRef<HTMLDivElement, React.PropsWithChildren>(
+  ({ children }, ref) => {
+    return (
+      <div
+        ref={ref}
+        style={{ height: BOX_SIZE, width: BOX_SIZE }}
+        className="box-content border-2 border-dashed border-black relative flex items-center justify-center"
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 export default Box;
